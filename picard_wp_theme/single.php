@@ -1,44 +1,33 @@
 <?php
-//
-get_header();
-//
-?>
-<h1>Lollolol</h1>
-<div class="col-1">
-    <ul>
-        <?php
-        $args = array(
-            'post_type' => 'diario',
-            'posts_per_page' => -1,
-            'origem' => 'banco-do-brasil'
-        );
-        //
-        global $query;
-        $query = new WP_Query($args);
-        while ($query->have_posts()) : $query->the_post();
-            //
-            echo '<li>';
-            echo '<p>' . get_field('diario_data') . '</p>';
-            echo '<p>' . get_the_title() . '</p>';
-            echo '<p>' . get_field('diario_valor') . '</p>';
+/**
+ * The Template for displaying all single posts.
+ *
+ * @package Odin
+ * @since 2.2.0
+ */
 
-            $terms = get_the_terms($post->ID, 'categorias');
-            if ($terms != null) {
-                foreach ($terms as $term) {
-                    print '<p>' . $term->name . '</p>';
-                    unset($term);
-                }
-            }
+get_header(); ?>
 
-            echo '</li>';
-        //
-        endwhile;
-        wp_reset_query();
-        ?>
-    </ul>
-</div>
+		<main id="content" class="<?php echo odin_classes_page_sidebar(); ?>" tabindex="-1" role="main">
+			<?php
+				// Start the Loop.
+				while ( have_posts() ) : the_post();
+
+					/*
+					 * Include the post format-specific template for the content. If you want to
+					 * use this in a child theme, then include a file called called content-___.php
+					 * (where ___ is the post format) and that will be used instead.
+					 */
+					get_template_part( 'content', get_post_format() );
+
+					// If comments are open or we have at least one comment, load up the comment template.
+					if ( comments_open() || get_comments_number() ) :
+						comments_template();
+					endif;
+				endwhile;
+			?>
+		</main><!-- #main -->
+
 <?php
-//
+get_sidebar();
 get_footer();
-//
-?>
