@@ -46,6 +46,7 @@ function custom_post_type() {
         'exclude_from_search' => false,
         'publicly_queryable' => true,
         'capability_type' => 'page',
+		'register_meta_box_cb' => 'add_valor_metabox'
     );
     register_post_type('diario', $args);
 }
@@ -278,4 +279,36 @@ function relatorio() {
 
 }
 add_action( 'init', 'relatorio', 0 );
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+// ADD Meta Box
+function add_valor_metabox() {
+    add_meta_box( 'meta_valor', 'Valor', 'meta_valor', 'diario', 'normal', 'high');
+}
+// The Event Location Metabox
+function meta_valor() {
+    global $post;
+    // Noncename needed to verify where the data originated
+    echo '<input type="hidden" name="eventmeta_noncename" id="eventmeta_noncename" value="' .
+    wp_create_nonce( plugin_basename(__FILE__) ) . '" />';
+    $location = get_post_meta($post->ID, '_location', true);
+    echo '<input type="text" name="_location" value="' . $location  . '" class="widefat" />';
+}
+
+
+
+
 ?>
