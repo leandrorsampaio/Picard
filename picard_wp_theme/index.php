@@ -15,26 +15,29 @@ $query = new WP_Query( $args );
 // The Loop
 if ( $query->have_posts() ) {
 
-	echo '<ul>';
+	echo '<script>';
 
+	$counter = 0;
 	while ( $query->have_posts() ) {
 		$query->the_post();
+
+		$counter = $counter + 1;
 
 		$var_relatorio_title = get_the_title();
 		$var_relatorio_valor = get_field('relatorio_valor');
 		$var_relatorio_obs = get_field('relatorio_obs');
 		$var_relatorio_group = get_field('relatorio_group');
 
+		echo 'var array_item_' + $counter + ' = ['
+		+ $var_relatorio_title  + ', ' +
+		+ $var_relatorio_valor  + ', ' +
+		+ $var_relatorio_obs  + ', ' +
+		+ $var_relatorio_group +
+		'];';
 
-		echo '<li>' .
-		'<span>' . $var_relatorio_title . '</span>' .
-		'<span>' . $var_relatorio_valor . '</span>' .
-		'<span>' . $var_relatorio_obs . '</span>' .
-		'<span>' . $var_relatorio_group . '</span>' .
-		'</li>';
 	}
 
-	echo '</ul>';
+	echo '</script>';
 
 } else {
 	// no posts found

@@ -4,7 +4,7 @@
         <meta http-equiv="Content-Type" content="text/html; <?php bloginfo('charset'); ?>" />
         <link rel="stylesheet" type="text/css" href="<?php bloginfo('stylesheet_url'); ?>"/>
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-        
+
          <?php wp_head(); ?>
     </head>
 
